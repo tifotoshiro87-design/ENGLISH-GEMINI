@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PolyGlot Master - Siêu Ứng Dụng Học Ngoại Ngữ & Giao Tiếp AI</title>
-    <!-- Tailwind CSS cho giao diện hiện đại, bắt mắt -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -14,42 +14,47 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-300" id="body-theme">
 
-    <!-- HEADER / NAVIGATION -->
+    <!-- HEADER -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 text-white p-2.5 rounded-xl shadow-md">
-                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-start">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 text-white p-2.5 rounded-xl shadow-md">
+                        <i class="fa-solid fa-graduation-cap text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg md:text-xl font-extrabold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">PolyGlot Master</h1>
+                        <p class="text-xs text-slate-500 font-medium">Học ngoại ngữ giao tiếp chuẩn AI</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-xl font-extrabold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">PolyGlot Master</h1>
-                    <p class="text-xs text-slate-500 font-medium">Học ngoại ngữ giao tiếp chuẩn AI & Đa nền tảng</p>
-                </div>
+                <!-- Nút cấu hình mobile -->
+                <button onclick="toggleSettingsModal()" class="md:hidden bg-indigo-50 text-indigo-600 p-2 rounded-lg text-sm">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
             </div>
 
             <!-- CHỌN NGÔN NGỮ & CẤP ĐỘ -->
-            <div class="flex items-center gap-3 flex-wrap">
-                <select id="lang-select" onchange="changeLanguage()" class="bg-slate-100 border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <option value="en">🇬🇧 Tiếng Anh (Giao tiếp)</option>
+            <div class="flex items-center gap-2 flex-wrap w-full md:w-auto justify-end">
+                <select id="lang-select" onchange="changeLanguage()" class="bg-slate-100 border border-slate-300 text-slate-700 text-xs md:text-sm rounded-lg px-2.5 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="en">🇬🇧 Tiếng Anh</option>
                     <option value="zh">🇨🇳 Tiếng Trung</option>
                     <option value="fr">🇫🇷 Tiếng Pháp</option>
                     <option value="ko">🇰🇷 Tiếng Hàn</option>
-                    <option value="es">🇪🇸 Tiếng Tây Ban Nha</option>
+                    <option value="es">🇪🇸 Tiếng TBN</option>
                     <option value="ja">🇯🇵 Tiếng Nhật</option>
                 </select>
 
-                <select id="level-select" onchange="changeLevel()" class="bg-slate-100 border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <!-- Dynamic loaded -->
+                <select id="level-select" onchange="changeLevel()" class="bg-slate-100 border border-slate-300 text-slate-700 text-xs md:text-sm rounded-lg px-2.5 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
                 </select>
 
-                <select id="theme-select" onchange="changeTheme()" class="bg-slate-100 border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <option value="vibrant">🎨 Vibrant Pastel</option>
-                    <option value="dark">🌙 Dark Mode</option>
-                    <option value="ocean">🌊 Soft Ocean</option>
-                    <option value="neon">⚡ Neon Cyber</option>
+                <select id="theme-select" onchange="changeTheme()" class="bg-slate-100 border border-slate-300 text-slate-700 text-xs md:text-sm rounded-lg px-2.5 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="vibrant">🎨 Vibrant</option>
+                    <option value="dark">🌙 Dark</option>
+                    <option value="ocean">🌊 Ocean</option>
+                    <option value="neon">⚡ Neon</option>
                 </select>
 
-                <button onclick="toggleSettingsModal()" class="bg-indigo-50 text-indigo-600 hover:bg-indigo-100 p-2.5 rounded-lg transition font-semibold text-sm flex items-center gap-1.5 shadow-sm">
+                <button onclick="toggleSettingsModal()" class="hidden md:flex bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-3 py-2 rounded-lg transition font-semibold text-sm items-center gap-1.5 shadow-sm">
                     <i class="fa-solid fa-gear"></i> Cấu hình API
                 </button>
             </div>
@@ -57,11 +62,11 @@
     </header>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <main class="max-w-7xl mx-auto px-4 py-4 md:py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
 
-        <!-- SIDEBAR -->
-        <aside class="lg:col-span-1 space-y-4">
-            <div class="bg-white p-1.5 rounded-xl border border-slate-200 shadow-sm flex">
+        <!-- SIDEBAR / MENU CHỦ ĐỀ -->
+        <aside class="lg:col-span-1 space-y-3">
+            <div class="bg-white p-1 rounded-xl border border-slate-200 shadow-sm flex">
                 <button onclick="switchTab(1)" id="tab-btn-1" class="flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white transition shadow-sm">
                     <i class="fa-solid fa-brain mr-1"></i> Tab 1: Lộ Trình AI
                 </button>
@@ -70,66 +75,63 @@
                 </button>
             </div>
 
-            <!-- TAB 1 CHỦ ĐỀ -->
-            <div id="sidebar-tab-1" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">Chủ đề bài học (Tab 1)</h3>
-                <div id="topics-list" class="space-y-1"></div>
+            <!-- TAB 1 CHỦ ĐỀ (Hiển thị dạng ngang trượt hoặc dọc gọn gàng trên mobile) -->
+            <div id="sidebar-tab-1" class="bg-white p-3 md:p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 px-1">Chủ đề bài học</h3>
+                <div id="topics-list" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-1.5"></div>
             </div>
 
             <!-- TAB 2 BỔ SUNG -->
             <div id="sidebar-tab-2" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2 hidden">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">Tiện ích & Mở rộng</h3>
-                <button onclick="loadSection('custom-lessons')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
-                    <span><i class="fa-solid fa-pen-nib mr-2 text-indigo-500"></i> Bài học tự tạo / Thêm mới</span>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 px-1">Tiện ích & Mở rộng</h3>
+                <button onclick="loadSection('custom-lessons')" class="w-full text-left px-3 py-2.5 rounded-lg text-xs md:text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-solid fa-pen-nib mr-2 text-indigo-500"></i> Bài học tự tạo</span>
                     <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
-                <button onclick="loadSection('podcasts')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
-                    <span><i class="fa-solid fa-podcast mr-2 text-violet-500"></i> Podcasts Hub & Tóm tắt</span>
+                <button onclick="loadSection('podcasts')" class="w-full text-left px-3 py-2.5 rounded-lg text-xs md:text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-solid fa-podcast mr-2 text-violet-500"></i> Podcasts Hub</span>
                     <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
-                <button onclick="loadSection('irregular-verbs')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
-                    <span><i class="fa-solid fa-book-bookmark mr-2 text-rose-500"></i> Bộ Động Từ Bất Quy Tắc</span>
+                <button onclick="loadSection('irregular-verbs')" class="w-full text-left px-3 py-2.5 rounded-lg text-xs md:text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-solid fa-book-bookmark mr-2 text-rose-500"></i> Động Từ Bất Quy Tắc</span>
                     <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
-                <button onclick="loadSection('github-guide')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
-                    <span><i class="fa-brands fa-github mr-2 text-slate-800"></i> Hướng dẫn GitHub & PWA</span>
+                <button onclick="loadSection('github-guide')" class="w-full text-left px-3 py-2.5 rounded-lg text-xs md:text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-brands fa-github mr-2 text-slate-800"></i> Hướng dẫn GitHub</span>
                     <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
             </div>
         </aside>
 
         <!-- CONTENT AREA -->
-        <section class="lg:col-span-3 space-y-6">
+        <section class="lg:col-span-3 space-y-4 md:space-y-6">
             
             <!-- THANH ĐIỀU CHỈNH ÂM THANH -->
-            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                    <span class="text-sm font-bold text-slate-700"><i class="fa-solid fa-sliders text-indigo-600 mr-1.5"></i> Điều chỉnh giọng đọc:</span>
-                    <div class="flex items-center gap-2">
-                        <label for="speed" class="text-xs text-slate-500 font-medium">Tốc độ:</label>
-                        <input type="range" id="speed" min="0.5" max="1.5" step="0.1" value="0.9" oninput="document.getElementById('speed-val').innerText = this.value + 'x'" class="accent-indigo-600 cursor-pointer">
-                        <span id="speed-val" class="text-xs font-bold text-indigo-600 w-8">0.9x</span>
-                    </div>
+            <div class="bg-white p-3 md:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs md:text-sm font-bold text-slate-700"><i class="fa-solid fa-sliders text-indigo-600 mr-1"></i> Tốc độ:</span>
+                    <input type="range" id="speed" min="0.5" max="1.5" step="0.1" value="0.9" oninput="document.getElementById('speed-val').innerText = this.value + 'x'" class="accent-indigo-600 cursor-pointer w-24 md:w-32">
+                    <span id="speed-val" class="text-xs font-bold text-indigo-600 w-8">0.9x</span>
                 </div>
 
-                <div class="flex items-center gap-2">
-                    <button onclick="playElevenLabsTTS(currentActiveText)" class="bg-violet-600 hover:bg-violet-700 text-white px-3.5 py-2 rounded-lg text-xs font-bold shadow-sm transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Đọc ElevenLabs (AI)
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <button onclick="playElevenLabsTTS(currentActiveText)" class="flex-1 sm:flex-none bg-violet-600 hover:bg-violet-700 text-white px-3 py-2 rounded-lg text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> ElevenLabs
                     </button>
-                    <button onclick="speakText(currentActiveText)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-lg text-xs font-bold shadow-sm transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-volume-high"></i> Đọc Mặc Định
+                    <button onclick="speakText(currentActiveText)" class="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i> Mặc định
                     </button>
                 </div>
             </div>
 
             <!-- MAIN LESSON VIEW CONTAINER -->
-            <div id="main-content-display" class="space-y-6"></div>
+            <div id="main-content-display" class="space-y-4 md:space-y-6"></div>
 
         </section>
     </main>
 
     <!-- SETTINGS MODAL -->
-    <div id="settings-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div id="settings-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
@@ -139,11 +141,11 @@
             </div>
             <div class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">OpenAI API Key (Whisper & AI):</label>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">OpenAI API Key (Whisper):</label>
                     <input type="password" id="openai-key" placeholder="sk-..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">ElevenLabs API Key (TTS Siêu thực):</label>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">ElevenLabs API Key:</label>
                     <input type="password" id="elevenlabs-key" placeholder="xi-..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
                 <div>
@@ -153,12 +155,12 @@
             </div>
             <div class="flex justify-end gap-2 pt-3 border-t">
                 <button onclick="toggleSettingsModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold transition">Hủy</button>
-                <button onclick="saveApiKeys(); toggleSettingsModal();" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow-md transition">Lưu cấu hình</button>
+                <button onclick="saveApiKeys(); toggleSettingsModal();" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow-md transition">Lưu</button>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC & DATABASE -->
+    <!-- SCRIPT -->
     <script>
         const levelData = {
             en: ["Intermediate (Trung bình)", "Advanced (Nâng cao)"],
@@ -170,100 +172,379 @@
         };
 
         const topicsTab1 = [
-            { id: 'social', name: 'Social (Xã hội)', icon: 'fa-users' },
-            { id: 'science', name: 'Science (Khoa học)', icon: 'fa-atom' },
-            { id: 'entertainment', name: 'Entertainment (Giải trí)', icon: 'fa-film' },
-            { id: 'healthcare', name: 'Healthcare (Y tế)', icon: 'fa-heart-pulse' },
-            { id: 'dailylife', name: 'Daily Life (Đời sống)', icon: 'fa-mug-hot' },
-            { id: 'sports', name: 'Sports (Thể thao)', icon: 'fa-futbol' },
-            { id: 'phrases', name: 'Common Phrases (Cụm từ thông dụng)', icon: 'fa-comments' }
+            { id: 'social', name: 'Social', icon: 'fa-users' },
+            { id: 'science', name: 'Science', icon: 'fa-atom' },
+            { id: 'entertainment', name: 'Entertainment', icon: 'fa-film' },
+            { id: 'healthcare', name: 'Healthcare', icon: 'fa-heart-pulse' },
+            { id: 'dailylife', name: 'Daily Life', icon: 'fa-mug-hot' },
+            { id: 'sports', name: 'Sports', icon: 'fa-futbol' },
+            { id: 'phrases', name: 'Phrases', icon: 'fa-comments' }
         ];
 
-        // --- KHO DỮ LIỆU 7 CHỦ ĐỀ CHUẨN XÁC ---
         const lessonDatabase = {
             social: {
                 passage: "Modern society relies heavily on digital communication and continuous technological innovation to bridge geographical gaps. People around the globe connect instantly through advanced networking platforms. Communities become more diverse as cultural exchange accelerates daily. However, preserving traditional values amidst rapid modernization remains a significant challenge. Citizens must balance virtual engagement with meaningful face-to-face interactions to build a cohesive and empathetic community.",
                 dialogue: [
                     { speaker: "Alex", text: "Have you noticed how fast technology is changing our social interactions?" },
-                    { speaker: "Sarah", text: "Absolutely! People connect across borders instantly, but sometimes we lose personal warmth." },
-                    { speaker: "David", text: "That is true. We need to find a healthy balance between digital life and real-world connection." }
+                    { speaker: "Sarah", text: "Absolutely! People connect across borders instantly, but sometimes we lose personal warmth." }
                 ],
                 vocab: [
                     { word: "Innovation", ipa: "/ˌɪnəˈveɪʃn/", type: "Noun (N)", meaning: "Sự đổi mới, cải tiến" },
-                    { word: "Cohesive", ipa: "/koʊˈhiːsɪv/", type: "Adjective (Adj)", meaning: "Gắn kết, chặt chẽ" },
-                    { word: "Empathetic", ipa: "/ˌempəˈθetɪk/", type: "Adjective (Adj)", meaning: "Đồng cảm, thấu cảm" }
+                    { word: "Cohesive", ipa: "/koʊˈhiːsɪv/", type: "Adjective (Adj)", meaning: "Gắn kết, chặt chẽ" }
                 ],
                 quiz: {
-                    text: "Modern society <span class='font-bold text-indigo-600'>[Câu 1]</span> heavily on digital communication and continuous technological <span class='font-bold text-indigo-600'>[Câu 2]</span> to bridge geographical gaps.",
-                    q1: { question: "Câu 1: Chọn đáp án đúng", options: [{t: "B. relies", correct: true}, {t: "D. relay", correct: false}, {t: "A. rely", correct: false}, {t: "C. relying", correct: false}] },
-                    q2: { question: "Câu 2: Chọn đáp án đúng", options: [{t: "C. innovation", correct: true}, {t: "A. innovate", correct: false}, {t: "B. innovative", correct: false}, {t: "D. innovator", correct: false}] }
+                    text: "Modern society <span class='font-bold text-indigo-600'>[Câu 1]</span> heavily on digital communication and continuous technological <span class='font-bold text-indigo-600'>[Câu 2]</span>.",
+                    q1: { question: "Câu 1:", options: [{t: "B. relies", correct: true}, {t: "A. rely", correct: false}, {t: "C. relying", correct: false}, {t: "D. relay", correct: false}] },
+                    q2: { question: "Câu 2:", options: [{t: "C. innovation", correct: true}, {t: "A. innovate", correct: false}, {t: "B. innovative", correct: false}, {t: "D. innovator", correct: false}] }
                 }
             },
             science: {
                 passage: "Scientific research drives human civilization forward by unlocking the mysteries of the universe. Quantum computing and artificial intelligence represent monumental leaps in technological capability. Researchers analyze massive datasets to predict climate changes and medical breakthroughs. Ethical considerations remain critical as biotechnology advances into gene editing. Ultimately, science aims to improve the quality of life while ensuring sustainable planetary development.",
                 dialogue: [
                     { speaker: "Dr. Robert", text: "Quantum computing will completely revolutionize data processing speeds." },
-                    { speaker: "Elena", text: "It opens up incredible possibilities for medical research and drug discovery." },
-                    { speaker: "Dr. Robert", text: "Exactly, but we must also establish strict ethical frameworks for AI development." }
+                    { speaker: "Elena", text: "It opens up incredible possibilities for medical research and drug discovery." }
                 ],
                 vocab: [
                     { word: "Breakthrough", ipa: "/ˈbreɪkθruː/", type: "Noun (N)", meaning: "Bước đột phá lớn" },
-                    { word: "Sustainable", ipa: "/səˈsteɪnəbl/", type: "Adjective (Adj)", meaning: "Bền vững" },
-                    { word: "Framework", ipa: "/ˈfreɪmwɜːrk/", type: "Noun (N)", meaning: "Khung pháp lý / Cấu trúc" }
+                    { word: "Sustainable", ipa: "/səˈsteɪnəbl/", type: "Adjective (Adj)", meaning: "Bền vững" }
                 ],
                 quiz: {
-                    text: "Scientific research <span class='font-bold text-indigo-600'>[Câu 1]</span> human civilization forward by unlocking the mysteries of the universe and technological <span class='font-bold text-indigo-600'>[Câu 2]</span>.",
-                    q1: { question: "Câu 1: Chọn đáp án đúng", options: [{t: "D. drives", correct: true}, {t: "A. drive", correct: false}, {t: "B. driving", correct: false}, {t: "C. drove", correct: false}] },
-                    q2: { question: "Câu 2: Chọn đáp án đúng", options: [{t: "A. breakthroughs", correct: true}, {t: "B. break", correct: false}, {t: "C. broken", correct: false}, {t: "D. breaking", correct: false}] }
+                    text: "Scientific research <span class='font-bold text-indigo-600'>[Câu 1]</span> human civilization forward by unlocking technological <span class='font-bold text-indigo-600'>[Câu 2]</span>.",
+                    q1: { question: "Câu 1:", options: [{t: "D. drives", correct: true}, {t: "A. drive", correct: false}, {t: "B. driving", correct: false}, {t: "C. drove", correct: false}] },
+                    q2: { question: "Câu 2:", options: [{t: "A. breakthroughs", correct: true}, {t: "B. break", correct: false}, {t: "C. broken", correct: false}, {t: "D. breaking", correct: false}] }
                 }
             },
             entertainment: {
                 passage: "The entertainment industry has shifted dramatically toward streaming services and interactive media experiences. Blockbuster movies and immersive video games captivate global audiences every single day. Independent creators now reach international fans directly through social media platforms. Live concerts and theatrical performances continue to offer unmatched emotional resonance. Balancing screen-based entertainment with outdoor hobbies ensures a well-rounded lifestyle.",
                 dialogue: [
                     { speaker: "Mark", text: "Have you watched the latest sci-fi series released on Netflix last night?" },
-                    { speaker: "Jessica", text: "Yes! The visual effects and storyline completely blew my mind." },
-                    { speaker: "Mark", text: "Immersive media storytelling has truly reached a whole new level." }
+                    { speaker: "Jessica", text: "Yes! The visual effects and storyline completely blew my mind." }
                 ],
                 vocab: [
                     { word: "Immersive", ipa: "/ɪˈmɜːrsɪv/", type: "Adjective (Adj)", meaning: "Đắm chìm, chân thực" },
-                    { word: "Resonance", ipa: "/ˈrezənəns/", type: "Noun (N)", meaning: "Sự cộng hưởng, cảm xúc sâu sắc" },
-                    { word: "Well-rounded", ipa: "/ˌwel ˈraʊndɪd/", type: "Adjective (Adj)", meaning: "Toàn diện, phong phú" }
+                    { word: "Resonance", ipa: "/ˈrezənəns/", type: "Noun (N)", meaning: "Sự cộng hưởng cảm xúc" }
                 ],
                 quiz: {
-                    text: "The entertainment industry has shifted <span class='font-bold text-indigo-600'>[Câu 1]</span> toward streaming services and <span class='font-bold text-indigo-600'>[Câu 2]</span> media experiences.",
-                    q1: { question: "Câu 1: Chọn đáp án đúng", options: [{t: "C. dramatically", correct: true}, {t: "A. dramatic", correct: false}, {t: "B. drama", correct: false}, {t: "D. dramatize", correct: false}] },
-                    q2: { question: "Câu 2: Chọn đáp án đúng", options: [{t: "B. immersive", correct: true}, {t: "D. immerse", correct: false}, {t: "A. immersion", correct: false}, {t: "C. immersively", correct: false}] }
+                    text: "The entertainment industry has shifted <span class='font-bold text-indigo-600'>[Câu 1]</span> toward streaming services and <span class='font-bold text-indigo-600'>[Câu 2]</span> media.",
+                    q1: { question: "Câu 1:", options: [{t: "C. dramatically", correct: true}, {t: "A. dramatic", correct: false}, {t: "B. drama", correct: false}, {t: "D. dramatize", correct: false}] },
+                    q2: { question: "Câu 2:", options: [{t: "B. immersive", correct: true}, {t: "D. immerse", correct: false}, {t: "A. immersion", correct: false}, {t: "C. immersively", correct: false}] }
                 }
             },
             healthcare: {
                 passage: "Maintaining optimal physical and mental health requires balanced nutrition, regular exercise, and adequate sleep. Preventive medicine focuses on early detection of chronic illnesses through routine screenings. Modern hospitals utilize telemedicine to provide remote patient consultations efficiently. Healthcare professionals emphasize stress management as a core component of overall wellness. Investing in personal health guarantees a productive and fulfilling life.",
                 dialogue: [
                     { speaker: "Nurse Anna", text: "Remember to schedule your annual health screening next week." },
-                    { speaker: "Patient John", text: "Thanks for the reminder. Does telemedicine count for my follow-up consultation?" },
-                    { speaker: "Nurse Anna", text: "Yes, you can easily connect with your doctor online from home." }
+                    { speaker: "Patient John", text: "Thanks for the reminder. Does telemedicine count for my follow-up?" }
                 ],
                 vocab: [
                     { word: "Preventive", ipa: "/prɪˈventɪv/", type: "Adjective (Adj)", meaning: "Mang tính phòng ngừa" },
-                    { word: "Screening", ipa: "/ˈskriːnɪŋ/", type: "Noun (N)", meaning: "Sự sàng lọc, kiểm tra y tế" },
-                    { word: "Consultation", ipa: "/ˌkɑːnslˈteɪʃn/", type: "Noun (N)", meaning: "Sự tư vấn khám bệnh" }
+                    { word: "Screening", ipa: "/ˈskriːnɪŋ/", type: "Noun (N)", meaning: "Sự sàng lọc, kiểm tra y tế" }
                 ],
                 quiz: {
-                    text: "Maintaining optimal health requires <span class='font-bold text-indigo-600'>[Câu 1]</span> nutrition, regular exercise, and early <span class='font-bold text-indigo-600'>[Câu 2]</span> of illnesses.",
-                    q1: { question: "Câu 1: Chọn đáp án đúng", options: [{t: "A. balanced", correct: true}, {t: "C. balance", correct: false}, {t: "B. balancing", correct: false}, {t: "D. balances", correct: false}] },
-                    q2: { question: "Câu 2: Chọn đáp án đúng", options: [{t: "D. detection", correct: true}, {t: "B. detect", correct: false}, {t: "A. detecting", correct: false}, {t: "C. detective", correct: false}] }
+                    text: "Maintaining health requires <span class='font-bold text-indigo-600'>[Câu 1]</span> nutrition and early <span class='font-bold text-indigo-600'>[Câu 2]</span> of illnesses.",
+                    q1: { question: "Câu 1:", options: [{t: "A. balanced", correct: true}, {t: "C. balance", correct: false}, {t: "B. balancing", correct: false}, {t: "D. balances", correct: false}] },
+                    q2: { question: "Câu 2:", options: [{t: "D. detection", correct: true}, {t: "B. detect", correct: false}, {t: "A. detecting", correct: false}, {t: "C. detective", correct: false}] }
                 }
             },
             dailylife: {
                 passage: "Daily routines establish a productive rhythm that helps manage busy work schedules effectively. Waking up early allows people to enjoy a peaceful breakfast and plan daily objectives. Commuting through bustling city streets often requires patience and flexibility. In the evening, spending quality time with family brings relaxation and emotional comfort. Embracing simple daily habits fosters long-term personal happiness.",
                 dialogue: [
                     { speaker: "David", text: "How do you usually manage your busy morning routine without rushing?" },
-                    { speaker: "Linda", text: "I always prepare my clothes and schedule my tasks the night before." },
-                    { speaker: "David", text: "That is a smart habit! I should definitely try doing that." }
+                    { speaker: "Linda", text: "I always prepare my clothes and schedule my tasks the night before." }
                 ],
                 vocab: [
                     { word: "Routine", ipa: "/ruːˈtiːn/", type: "Noun (N)", meaning: "Thói quen thường nhật" },
-                    { word: "Objective", ipa: "/əbˈdʒektɪv/", type: "Noun (N)", meaning: "Mục tiêu" },
-                    { word: "Fosterc", ipa: "/ˈfɑːstər/", type: "Verb (V)", meaning: "Nuôi dưỡng, thúc đẩy" }
+                    { word: "Objective", ipa: "/əbˈdʒektɪv/", type: "Noun (N)", meaning: "Mục tiêu" }
                 ],
                 quiz: {
-                    text: "Daily routines establish a <span class='font-bold text-indigo-6
+                    text: "Daily routines establish a <span class='font-bold text-indigo-600'>[Câu 1]</span> rhythm that helps manage work schedules <span class='font-bold text-indigo-600'>[Câu 2]</span>.",
+                    q1: { question: "Câu 1:", options: [{t: "B. productive", correct: true}, {t: "A. product", correct: false}, {t: "C. production", correct: false}, {t: "D. produce", correct: false}] },
+                    q2: { question: "Câu 2:", options: [{t: "C. effectively", correct: true}, {t: "A. effective", correct: false}, {t: "B. effectiveness", correct: false}, {t: "D. effect", correct: false}] }
+                }
+            },
+            sports: {
+                passage: "Sports play a vital role in building physical endurance, teamwork, and mental resilience. Professional athletes dedicate years of rigorous training to achieve peak performance. Team sports teach individuals how to communicate and strategize under pressure. Recreational activities like running and swimming keep communities active and healthy. Celebrating athletic achievements fosters national pride and unity.",
+                dialogue: [
+                    { speaker: "Coach Tom", text: "Great teamwork on the field today, team! Our defense was solid." },
+                    { speaker: "Captain Leo", text: "Thanks coach. We practiced passing strategies all week long." }
+                ],
+                vocab: [
+                    { word: "Resilience", ipa: "/rɪˈzɪliəns/", type: "Noun (N)", meaning: "Sự kiên cường, bền bỉ" },
+                    { word: "Rigorous", ipa: "/ˈrɪɡərəs/", type: "Adjective (Adj)", meaning: "Khắt khe, nghiêm ngặt" }
+                ],
+                quiz: {
+                    text: "Sports play a <span class='font-bold text-indigo-600'>[Câu 1]</span> role in building endurance and mental <span class='font-bold text-indigo-600'>[Câu 2]</span>.",
+                    q1: { question: "Câu 1:", options: [{t: "A. vital", correct: true}, {t: "B. vitality", correct: false}, {t: "C. vitally", correct: false}, {t: "D. vitalize", correct: false}] },
+                    q2: { question: "Câu 2:", options: [{t: "C. resilience", correct: true}, {t: "A. resilient", correct: false}, {t: "B. resiliently", correct: false}, {t: "D. resist", correct: false}] }
+                }
+            },
+            phrases: {
+                passage: "Mastering common conversational phrases enhances fluency and natural social interaction. Expressions such as 'By the way' or 'On the other hand' help connect thoughts smoothly. Native speakers frequently use idioms to add color and precision to their everyday speech. Practicing situational dialogues builds confidence when speaking with foreign colleagues. Consistent usage turns awkward hesitation into effortless communication.",
+                dialogue: [
+                    { speaker: "Alice", text: "By the way, are you joining the workshop this Friday afternoon?" },
+                    { speaker: "Bob", text: "On second thought, I might skip it to finish my project report." }
+                ],
+                vocab: [
+                    { word: "Fluency", ipa: "/ˈfluːənsi/", type: "Noun (N)", meaning: "Sự trôi chảy, lưu loát" },
+                    { word: "Effortless", ipa: "/ˈefərtləs/", type: "Adjective (Adj)", meaning: "Dễ dàng, không gắng sức" }
+                ],
+                quiz: {
+                    text: "Mastering common phrases enhances <span class='font-bold text-indigo-600'>[Câu 1]</span> and turns hesitation into <span class='font-bold text-indigo-600'>[Câu 2]</span> communication.",
+                    q1: { question: "Câu 1:", options: [{t: "D. fluency", correct: true}, {t: "A. fluent", correct: false}, {t: "B. fluently", correct: false}, {t: "C. flue", correct: false}] },
+                    q2: { question: "Câu 2:", options: [{t: "B. effortless", correct: true}, {t: "A. effort", correct: false}, {t: "C. effortlessly", correct: false}, {t: "D. exacting", correct: false}] }
+                }
+            }
+        };
+
+        let currentActiveText = "";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLevels();
+            renderTopics();
+            loadLessonContent('social');
+            if(localStorage.getItem('openai_api_key')) document.getElementById('openai-key').value = localStorage.getItem('openai_api_key');
+            if(localStorage.getItem('elevenlabs_api_key')) document.getElementById('elevenlabs-key').value = localStorage.getItem('elevenlabs_api_key');
+        });
+
+        function loadLevels() {
+            const lang = document.getElementById('lang-select').value;
+            const levels = levelData[lang] || levelData['en'];
+            const levelSelect = document.getElementById('level-select');
+            levelSelect.innerHTML = '';
+            levels.forEach((lvl, idx) => {
+                levelSelect.innerHTML += `<option value="${idx}">${lvl}</option>`;
+            });
+        }
+
+        function changeLanguage() {
+            loadLevels();
+            renderTopics();
+            loadLessonContent('social');
+        }
+
+        function changeLevel() {
+            loadLessonContent('social');
+        }
+
+        function renderTopics() {
+            const list = document.getElementById('topics-list');
+            list.innerHTML = '';
+            topicsTab1.forEach(t => {
+                list.innerHTML += `
+                    <button onclick="loadLessonContent('${t.id}')" class="w-full text-left px-2.5 py-2 rounded-lg text-xs md:text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center gap-2">
+                        <i class="fa-solid ${t.icon} w-4 text-indigo-500"></i> <span class="truncate">${t.name}</span>
+                    </button>
+                `;
+            });
+        }
+
+        function switchTab(tabNum) {
+            if(tabNum === 1) {
+                document.getElementById('tab-btn-1').className = "flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white transition shadow-sm";
+                document.getElementById('tab-btn-2').className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition";
+                document.getElementById('sidebar-tab-1').classList.remove('hidden');
+                document.getElementById('sidebar-tab-2').classList.add('hidden');
+                loadLessonContent('social');
+            } else {
+                document.getElementById('tab-btn-2').className = "flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white transition shadow-sm";
+                document.getElementById('tab-btn-1').className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition";
+                document.getElementById('sidebar-tab-2').classList.remove('hidden');
+                document.getElementById('sidebar-tab-1').classList.add('hidden');
+                loadSection('custom-lessons');
+            }
+        }
+
+        function loadLessonContent(topicId) {
+            const lesson = lessonDatabase[topicId] || lessonDatabase['social'];
+            currentActiveText = lesson.passage;
+            const display = document.getElementById('main-content-display');
+
+            let dialogueHTML = '';
+            lesson.dialogue.forEach((d, idx) => {
+                const bgColors = ['bg-indigo-50/60 border-indigo-100 text-indigo-700', 'bg-violet-50/60 border-violet-100 text-violet-700'];
+                dialogueHTML += `
+                    <div class="p-3 ${bgColors[idx % bgColors.length]} rounded-xl border space-y-1">
+                        <div class="flex justify-between text-xs font-bold">
+                            <span>${d.speaker}</span>
+                            <button onclick="playElevenLabsTTS('${d.text}')" class="hover:underline"><i class="fa-solid fa-volume-high"></i> Nghe</button>
+                        </div>
+                        <p class="text-xs md:text-sm text-slate-700">"${d.text}"</p>
+                    </div>
+                `;
+            });
+
+            let vocabHTML = '';
+            lesson.vocab.forEach(v => {
+                vocabHTML += `
+                    <tr>
+                        <td class="p-2.5 font-bold text-slate-800">${v.word}</td>
+                        <td class="p-2.5 text-slate-500">${v.ipa}</td>
+                        <td class="p-2.5"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs font-bold">${v.type}</span></td>
+                        <td class="p-2.5">${v.meaning}</td>
+                    </tr>
+                `;
+            });
+
+            let q1Opts = [...lesson.quiz.q1.options].sort(() => Math.random() - 0.5);
+            let q2Opts = [...lesson.quiz.q2.options].sort(() => Math.random() - 0.5);
+
+            let q1HTML = q1Opts.map(o => `<button onclick="alert('${o.correct ? 'Chính xác! 🎉' : 'Sai rồi! ❌'}')" class="p-2 bg-white border border-slate-300 rounded-lg hover:bg-indigo-50 transition text-left text-xs">${o.t}</button>`).join('');
+            let q2HTML = q2Opts.map(o => `<button onclick="alert('${o.correct ? 'Chính xác! 🎉' : 'Sai rồi! ❌'}')" class="p-2 bg-white border border-slate-300 rounded-lg hover:bg-indigo-50 transition text-left text-xs">${o.t}</button>`).join('');
+
+            display.innerHTML = `
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm md:text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-book-open text-indigo-600"></i> 1. Đoạn Văn Mẫu
+                        </h3>
+                        <button onclick="playElevenLabsTTS(currentActiveText)" class="text-xs bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg font-bold hover:bg-indigo-100 transition">
+                            <i class="fa-solid fa-volume-high"></i> Nghe
+                        </button>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed text-xs md:text-sm bg-slate-50 p-3.5 rounded-xl border border-slate-100" id="target-sentence">
+                        ${lesson.passage}
+                    </p>
+                </div>
+
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <h3 class="text-sm md:text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-violet-600"></i> 2. Cuộc Hội Thoại
+                    </h3>
+                    <div class="space-y-2.5">${dialogueHTML}</div>
+                </div>
+
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <h3 class="text-sm md:text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-emerald-600"></i> 3. Từ Vựng & Ngữ Pháp
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs md:text-sm text-slate-600">
+                            <thead class="bg-slate-100 text-slate-700 uppercase text-[10px] md:text-xs">
+                                <tr>
+                                    <th class="p-2.5 rounded-l-lg">Từ vựng</th>
+                                    <th class="p-2.5">IPA</th>
+                                    <th class="p-2.5">Dạng</th>
+                                    <th class="p-2.5 rounded-r-lg">Nghĩa</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">${vocabHTML}</tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <h3 class="text-sm md:text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-question text-amber-600"></i> 4. Bài Tập Trắc Nghiệm
+                    </h3>
+                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed bg-amber-50/50 p-3.5 rounded-xl border border-amber-100">
+                        ${lesson.quiz.text}
+                    </p>
+                    <div class="space-y-3 pt-1">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <p class="text-xs font-bold text-slate-700">${lesson.quiz.q1.question}</p>
+                            <div class="grid grid-cols-2 gap-2 font-semibold">${q1HTML}</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <p class="text-xs font-bold text-slate-700">${lesson.quiz.q2.question}</p>
+                            <div class="grid grid-cols-2 gap-2 font-semibold">${q2HTML}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadSection(sectionKey) {
+            const display = document.getElementById('main-content-display');
+            if(sectionKey === 'custom-lessons') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-base font-bold text-slate-800"><i class="fa-solid fa-pen-nib text-indigo-600"></i> Thêm Bài Học Tùy Chỉnh</h3>
+                        <textarea id="custom-text-input" rows="4" placeholder="Nhập đoạn văn..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm outline-none"></textarea>
+                        <button onclick="currentActiveText = document.getElementById('custom-text-input').value; alert('Đã lưu!');" class="bg-indigo-600 text-white font-bold px-4 py-2.5 rounded-xl text-sm shadow-md">Lưu & Đọc</button>
+                    </div>
+                `;
+            } else if(sectionKey === 'podcasts') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <h3 class="text-base font-bold text-slate-800"><i class="fa-solid fa-podcast text-violet-600"></i> Podcasts Hub</h3>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-xs md:text-sm text-slate-800">English Learning Podcast #1</h4>
+                            <p class="text-xs text-slate-500">Tóm tắt: Luyện phản xạ giao tiếp tự nhiên.</p>
+                            <a href="https://spotify.com" target="_blank" class="text-xs font-bold text-indigo-600 hover:underline">🔗 Nghe trực tiếp &rarr;</a>
+                        </div>
+                    </div>
+                `;
+            } else if(sectionKey === 'irregular-verbs') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <h3 class="text-base font-bold text-slate-800"><i class="fa-solid fa-book-bookmark text-rose-600"></i> Động Từ Bất Quy Tắc</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-100 uppercase text-[10px]">
+                                    <tr><th class="p-2">V1</th><th class="p-2">V2</th><th class="p-2">V3</th><th class="p-2">Nghĩa</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr><td class="p-2 font-bold">Be</td><td class="p-2">Was/Were</td><td class="p-2">Been</td><td class="p-2">Là, ở</td></tr>
+                                    <tr><td class="p-2 font-bold">Begin</td><td class="p-2">Began</td><td class="p-2">Begun</td><td class="p-2">Bắt đầu</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            } else if(sectionKey === 'github-guide') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <h3 class="text-base font-bold text-slate-800"><i class="fa-brands fa-github"></i> Hướng Dẫn GitHub</h3>
+                        <p class="text-xs text-slate-600">Sửa file index.html -> Commit to main -> Push origin trên GitHub Desktop để cập nhật ngay lập tức.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function changeTheme() {
+            const theme = document.getElementById('theme-select').value;
+            const body = document.getElementById('body-theme');
+            if(theme === 'dark') body.className = "bg-slate-900 text-slate-100 min-h-screen flex flex-col transition-colors duration-300";
+            else if(theme === 'ocean') body.className = "bg-cyan-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-300";
+            else if(theme === 'neon') body.className = "bg-zinc-950 text-zinc-100 min-h-screen flex flex-col transition-colors duration-300";
+            else body.className = "bg-slate-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-300";
+        }
+
+        function toggleSettingsModal() { document.getElementById('settings-modal').classList.toggle('hidden'); }
+
+        function saveApiKeys() {
+            localStorage.setItem('openai_api_key', document.getElementById('openai-key').value.trim());
+            localStorage.setItem('elevenlabs_api_key', document.getElementById('elevenlabs-key').value.trim());
+            localStorage.setItem('elevenlabs_voice_id', document.getElementById('elevenlabs-voice').value.trim() || '21m00Tcm4TlvDq8ikWAM');
+            alert('Đã lưu cấu hình API thành công!');
+        }
+
+        async function playElevenLabsTTS(text) {
+            const apiKey = localStorage.getItem('elevenlabs_api_key');
+            const voiceId = localStorage.getItem('elevenlabs_voice_id') || '21m00Tcm4TlvDq8ikWAM';
+            if (!apiKey) { speakText(text); return; }
+            try {
+                const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+                    method: 'POST',
+                    headers: { 'Accept': 'audio/mpeg', 'Content-Type': 'application/json', 'xi-api-key': apiKey },
+                    body: JSON.stringify({ text: text, model_id: "eleven_monolingual_v1", voice_settings: { stability: 0.5, similarity_boost: 0.75 } })
+                });
+                if (!response.ok) throw new Error();
+                const blob = await response.blob();
+                new Audio(URL.createObjectURL(blob)).play();
+            } catch (error) { speakText(text); }
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) { alert("Trình duyệt không hỗ trợ đọc âm thanh!"); return; }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = window.speechSynthesis.getVoices();
+            const preferredVoice = voices.find(v => v.lang.includes('en-US') && (v.name.includes('Natural') || v.name.includes('Google'))) || voices.find(v => v.lang.startsWith('en'));
+            if (preferredVoice) utterance.voice = preferredVoice;
+            utterance.rate = parseFloat(document.getElementById('speed').value);
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
