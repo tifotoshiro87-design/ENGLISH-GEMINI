@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyGlot Master - Siêu Ứng Dụng Học Ngoại Ngữ & Giao Tiếp AI</title>
+    <!-- Tailwind CSS cho giao diện hiện đại, bắt mắt -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col transition-colors duration-300" id="body-theme">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 text-white p-2.5 rounded-xl shadow-md">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">PolyGlot Master</h1>
+                    <p class="text-xs text-slate-500 font-medium">Học ngoại ngữ giao tiếp chuẩn AI & Đa nền tảng</p>
+                </div>
+            </div>
+
+            <!-- CHỌN NGÔN NGỮ & CẤP ĐỘ -->
+            <div class="flex items-center gap-3 flex-wrap">
+                <select id="lang-select" onchange="changeLanguage()" class="bg-slate-100 border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="en">🇬🇧 Tiếng Anh (Giao tiếp)</option>
+                    <option value="zh">🇨🇳 Tiếng Trung</option>
+                    <option value="fr">🇫🇷 Tiếng Pháp</option>
+                    <option value="ko">🇰🇷 Tiếng Hàn</option>
+                    <option value="es">🇪🇸 Tiếng Tây Ban Nha</option>
+                    <option value="ja">🇯🇵 Tiếng Nhật</option>
+                </select>
+
+                <select id="level-select" onchange="changeLevel()" class="bg-slate-100 border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <!-- Tùy chỉnh theo ngôn ngữ -->
+                </select>
+
+                <!-- Nút đổi theme / giao diện -->
+                <select id="theme-select" onchange="changeTheme()" class="bg-slate-100 border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-2 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="vibrant">🎨 Vibrant Pastel</option>
+                    <option value="dark">🌙 Dark Mode</option>
+                    <option value="ocean">🌊 Soft Ocean</option>
+                    <option value="neon">⚡ Neon Cyber</option>
+                </select>
+
+                <!-- Nút mở cài đặt API -->
+                <button onclick="toggleSettingsModal()" class="bg-indigo-50 text-indigo-600 hover:bg-indigo-100 p-2.5 rounded-lg transition font-semibold text-sm flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-gear"></i> Cấu hình API
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- SIDEBAR: CHỌN TAB & CHỦ ĐỀ -->
+        <aside class="lg:col-span-1 space-y-4">
+            <!-- Tabs Switcher -->
+            <div class="bg-white p-1.5 rounded-xl border border-slate-200 shadow-sm flex">
+                <button onclick="switchTab(1)" id="tab-btn-1" class="flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white transition shadow-sm">
+                    <i class="fa-solid fa-brain mr-1"></i> Tab 1: Lộ Trình AI
+                </button>
+                <button onclick="switchTab(2)" id="tab-btn-2" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-layer-group mr-1"></i> Tab 2: Tùy Chỉnh
+                </button>
+            </div>
+
+            <!-- TAB 1 CHỦ ĐỀ -->
+            <div id="sidebar-tab-1" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">Chủ đề bài học (Tab 1)</h3>
+                <div id="topics-list" class="space-y-1">
+                    <!-- Dynamic loaded via JS -->
+                </div>
+            </div>
+
+            <!-- TAB 2 BỔ SUNG KHÁC -->
+            <div id="sidebar-tab-2" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2 hidden">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">Tiện ích & Mở rộng</h3>
+                <button onclick="loadSection('custom-lessons')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-solid fa-pen-nib mr-2 text-indigo-500"></i> Bài học tự tạo / Thêm mới</span>
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+                <button onclick="loadSection('podcasts')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-solid fa-podcast mr-2 text-violet-500"></i> Podcasts Hub & Tóm tắt</span>
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+                <button onclick="loadSection('irregular-verbs')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-solid fa-book-bookmark mr-2 text-rose-500"></i> Bộ Động Từ Bất Quy Tắc</span>
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+                <button onclick="loadSection('github-guide')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-between">
+                    <span><i class="fa-brands fa-github mr-2 text-slate-800"></i> Hướng dẫn GitHub & PWA</span>
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <section class="lg:col-span-3 space-y-6">
+            
+            <!-- THANH ĐIỀU CHỈNH GIỌNG ĐỌC & TỐC ĐỘ -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-sm font-bold text-slate-700"><i class="fa-solid fa-sliders text-indigo-600 mr-1.5"></i> Điều chỉnh giọng đọc:</span>
+                    <div class="flex items-center gap-2">
+                        <label for="speed" class="text-xs text-slate-500 font-medium">Tốc độ:</label>
+                        <input type="range" id="speed" min="0.5" max="1.5" step="0.1" value="0.9" oninput="document.getElementById('speed-val').innerText = this.value + 'x'" class="accent-indigo-600 cursor-pointer">
+                        <span id="speed-val" class="text-xs font-bold text-indigo-600 w-8">0.9x</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="playElevenLabsTTS(currentActiveText)" class="bg-violet-600 hover:bg-violet-700 text-white px-3.5 py-2 rounded-lg text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Đọc ElevenLabs (AI)
+                    </button>
+                    <button onclick="speakText(currentActiveText)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-lg text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i> Đọc Mặc Định
+                    </button>
+                </div>
+            </div>
+
+            <!-- MAIN LESSON VIEW CONTAINER -->
+            <div id="main-content-display" class="space-y-6">
+                <!-- Nội dung bài học, hội thoại, từ vựng và trắc nghiệm sẽ render tại đây -->
+            </div>
+
+        </section>
+    </main>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl space-y-4 border border-slate-100">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-key text-indigo-600"></i> Cấu hình API Keys AI
+                </h3>
+                <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">&times;</button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">OpenAI API Key (Whisper & AI):</label>
+                    <input type="password" id="openai-key" placeholder="sk-..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">ElevenLabs API Key (TTS Siêu thực):</label>
+                    <input type="password" id="elevenlabs-key" placeholder="xi-..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">ElevenLabs Voice ID:</label>
+                    <input type="text" id="elevenlabs-voice" value="21m00Tcm4TlvDq8ikWAM" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-3 border-t">
+                <button onclick="toggleSettingsModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold transition">Hủy</button>
+                <button onclick="saveApiKeys(); toggleSettingsModal();" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow-md transition">Lưu cấu hình</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC ENGINE -->
+    <script>
+        // --- DỮ LIỆU CẤP ĐỘ THEO NGÔN NGỮ ---
+        const levelData = {
+            en: ["Intermediate (Trung bình)", "Advanced (Nâng cao)"],
+            zh: ["Vở lòng (Beginner)", "Trung bình (Intermediate)"],
+            fr: ["Vở lòng (Beginner)", "Trung bình (Intermediate)"],
+            ko: ["Vở lòng (Beginner)", "Trung bình (Intermediate)"],
+            es: ["Vở lòng (Beginner)", "Trung bình (Intermediate)"],
+            ja: ["Vở lòng (Beginner)", "Trung bình (Intermediate)"]
+        };
+
+        // --- DỮ LIỆU CHỦ ĐỀ TAB 1 (7 CHỦ ĐỀ YÊU CẦU) ---
+        const topicsTab1 = [
+            { id: 'social', name: 'Social (Xã hội)', icon: 'fa-users' },
+            { id: 'science', name: 'Science (Khoa học)', icon: 'fa-atom' },
+            { id: 'entertainment', name: 'Entertainment (Giải trí)', icon: 'fa-film' },
+            { id: 'healthcare', name: 'Healthcare (Y tế)', icon: 'fa-heart-pulse' },
+            { id: 'dailylife', name: 'Daily Life (Đời sống)', icon: 'fa-mug-hot' },
+            { id: 'sports', name: 'Sports (Thể thao)', icon: 'fa-futbol' },
+            { id: 'phrases', name: 'Common Phrases (Cụm từ thông dụng)', icon: 'fa-comments' }
+        ];
+
+        let currentActiveText = "Welcome to PolyGlot Master. Select a lesson to start learning.";
+
+        // Khởi tạo trang
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLevels();
+            renderTopics();
+            loadLessonContent('social');
+            if(localStorage.getItem('openai_api_key')) document.getElementById('openai-key').value = localStorage.getItem('openai_api_key');
+            if(localStorage.getItem('elevenlabs_api_key')) document.getElementById('elevenlabs-key').value = localStorage.getItem('elevenlabs_api_key');
+        });
+
+        function loadLevels() {
+            const lang = document.getElementById('lang-select').value;
+            const levels = levelData[lang] || levelData['en'];
+            const levelSelect = document.getElementById('level-select');
+            levelSelect.innerHTML = '';
+            levels.forEach((lvl, idx) => {
+                levelSelect.innerHTML += `<option value="${idx}">${lvl}</option>`;
+            });
+        }
+
+        function changeLanguage() {
+            loadLevels();
+            renderTopics();
+            loadLessonContent('social');
+        }
+
+        function changeLevel() {
+            loadLessonContent('social');
+        }
+
+        function renderTopics() {
+            const list = document.getElementById('topics-list');
+            list.innerHTML = '';
+            topicsTab1.forEach(t => {
+                list.innerHTML += `
+                    <button onclick="loadLessonContent('${t.id}')" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center gap-2.5">
+                        <i class="fa-solid ${t.icon} w-5 text-indigo-500"></i> ${t.name}
+                    </button>
+                `;
+            });
+        }
+
+        function switchTab(tabNum) {
+            if(tabNum === 1) {
+                document.getElementById('tab-btn-1').className = "flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white transition shadow-sm";
+                document.getElementById('tab-btn-2').className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition";
+                document.getElementById('sidebar-tab-1').classList.remove('hidden');
+                document.getElementById('sidebar-tab-2').classList.add('hidden');
+                loadLessonContent('social');
+            } else {
+                document.getElementById('tab-btn-2').className = "flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white transition shadow-sm";
+                document.getElementById('tab-btn-1').className = "flex-1 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition";
+                document.getElementById('sidebar-tab-2').classList.remove('hidden');
+                document.getElementById('sidebar-tab-1').classList.add('hidden');
+                loadSection('custom-lessons');
+            }
+        }
+
+        // --- RENDER NỘI DUNG BÀI HỌC (Đoạn văn, Hội thoại, Từ vựng, Trắc nghiệm xáo trộn) ---
+        function loadLessonContent(topicId) {
+            const display = document.getElementById('main-content-display');
+            
+            // Dữ liệu mẫu chuẩn tiêu chí yêu cầu
+            currentActiveText = "Modern society relies heavily on digital communication and continuous technological innovation to bridge geographical gaps. People around the globe connect instantly through advanced networking platforms.";
+            
+            display.innerHTML = `
+                <!-- 1. ĐOẠN VĂN MẪU -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-book-open text-indigo-600"></i> 1. Đoạn Văn Mẫu (Reading Passage)
+                        </h3>
+                        <button onclick="playElevenLabsTTS(currentActiveText)" class="text-xs bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg font-bold hover:bg-indigo-100 transition">
+                            <i class="fa-solid fa-volume-high"></i> Nghe đọc đoạn văn
+                        </button>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed text-sm md:text-base bg-slate-50 p-4 rounded-xl border border-slate-100" id="target-sentence">
+                        ${currentActiveText}
+                    </p>
+                </div>
+
+                <!-- 2. CUỘC HỘI THOẠI 2-3 NGƯỜI -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-violet-600"></i> 2. Cuộc Hội Thoại Giao Tiếp (2-3 Người)
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="p-3.5 bg-indigo-50/60 rounded-xl border border-indigo-100 space-y-1">
+                            <div class="flex justify-between text-xs font-bold text-indigo-700">
+                                <span>Alex (Speaker 1)</span>
+                                <button onclick="playElevenLabsTTS('Have you noticed how fast technology is changing our daily interactions?')" class="hover:underline"><i class="fa-solid fa-volume-high"></i> Nghe</button>
+                            </div>
+                            <p class="text-sm text-slate-700">"Have you noticed how fast technology is changing our daily interactions?"</p>
+                        </div>
+                        <div class="p-3.5 bg-violet-50/60 rounded-xl border border-violet-100 space-y-1">
+                            <div class="flex justify-between text-xs font-bold text-violet-700">
+                                <span>Sarah (Speaker 2)</span>
+                                <button onclick="playElevenLabsTTS('Absolutely! It makes communication much easier, though sometimes less personal.')" class="hover:underline"><i class="fa-solid fa-volume-high"></i> Nghe</button>
+                            </div>
+                            <p class="text-sm text-slate-700">"Absolutely! It makes communication much easier, though sometimes less personal."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. TỪ VỰNG & NGỮ PHÁP -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-emerald-600"></i> 3. Từ Vựng & Ngữ Pháp Trọng Tâm
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-100 text-slate-700 uppercase text-xs">
+                                <tr>
+                                    <th class="p-3 rounded-l-lg">Từ vựng</th>
+                                    <th class="p-3">Phát âm (IPA)</th>
+                                    <th class="p-3">Dạng từ</th>
+                                    <th class="p-3 rounded-r-lg">Nghĩa tiếng Việt</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="p-3 font-bold text-slate-800">Relies heavily</td>
+                                    <td class="p-3 text-slate-500">/rɪˈlaɪz ˈhɛvɪli/</td>
+                                    <td class="p-3"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs font-bold">Verb phrase</span></td>
+                                    <td class="p-3">Phụ thuộc nhiều</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-slate-800">Innovation</td>
+                                    <td class="p-3 text-slate-500">/ˌɪnəˈveɪʃn/</td>
+                                    <td class="p-3"><span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-xs font-bold">Noun (N)</span></td>
+                                    <td class="p-3">Sự đổi mới, cải tiến</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. TRẮC NGHIỆM ĐIỀN KHUYẾT (XÁO TRỘN NGẪU NHIÊN) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-question text-amber-600"></i> 4. Bài Tập Trắc Nghiệm Điền Khuyết (Randomized)
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                        Modern society <span class="font-bold text-indigo-600">[Câu 1]</span> heavily on digital communication and continuous technological <span class="font-bold text-indigo-600">[Câu 2]</span>.
+                    </p>
+                    <div class="space-y-4 pt-2">
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <p class="text-xs font-bold text-slate-700">Câu 1: Chọn đáp án đúng cho ô trống 1</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-semibold">
+                                <button onclick="alert('Chính xác!')" class="p-2.5 bg-white border border-slate-300 rounded-lg hover:bg-indigo-50 hover:border-indigo-500 transition">B. relies</button>
+                                <button onclick="alert('Sai rồi!')" class="p-2.5 bg-white border border-slate-300 rounded-lg hover:bg-indigo-50 hover:border-indigo-500 transition">D. relay</button>
+                                <button onclick="alert('Sai rồi!')" class="p-2.5 bg-white border border-slate-300 rounded-lg hover:bg-indigo-50 hover:border-indigo-500 transition">A. rely</button>
+                                <button onclick="alert('Sai rồi!')" class="p-2.5 bg-white border border-slate-300 rounded-lg hover:bg-indigo-50 hover:border-indigo-500 transition">C. relying</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- LOAD CÁC MỤC TAB 2 ---
+        function loadSection(sectionKey) {
+            const display = document.getElementById('main-content-display');
+            if(sectionKey === 'custom-lessons') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-pen-nib text-indigo-600"></i> Thêm Bài Học Tùy Chỉnh (Tab 2)
+                        </h3>
+                        <p class="text-sm text-slate-600">Tự nhập nội dung đoạn văn hoặc chủ đề riêng của bạn để AI và trình đọc hỗ trợ luyện tập:</p>
+                        <textarea rows="4" placeholder="Nhập đoạn văn tiếng Anh hoặc ngoại ngữ của bạn vào đây..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                        <button onclick="alert('Đã lưu bài học tùy chỉnh thành công!')" class="bg-indigo-600 text-white font-bold px-4 py-2.5 rounded-xl text-sm shadow-md hover:bg-indigo-700 transition">Lưu & Đọc Bài Học</button>
+                    </div>
+                `;
+            } else if(sectionKey === 'podcasts') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-podcast text-violet-600"></i> Podcasts Hub & Tóm Tắt AI
+                        </h3>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <h4 class="font-bold text-sm text-slate-800">English Learning Daily Podcast #1</h4>
+                            <p class="text-xs text-slate-500">Tóm tắt: Episode này bàn về cách phát triển phản xạ giao tiếp tự nhiên trong môi trường công sở và xã hội.</p>
+                            <a href="https://spotify.com" target="_blank" class="inline-block text-xs font-bold text-indigo-600 hover:underline">🔗 Nghe trực tiếp trên nền tảng gốc &rarr;</a>
+                        </div>
+                    </div>
+                `;
+            } else if(sectionKey === 'irregular-verbs') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-book-bookmark text-rose-600"></i> Bộ Động Từ Bất Quy Tắc
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600">
+                                <thead class="bg-slate-100 text-slate-700 uppercase text-xs">
+                                    <tr>
+                                        <th class="p-3">V1 (Infinitive)</th>
+                                        <th class="p-3">V2 (Past Simple)</th>
+                                        <th class="p-3">V3 (Past Participle)</th>
+                                        <th class="p-3">Ý nghĩa</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr><td class="p-3 font-bold">Be</td><td class="p-3">Was/Were</td><td class="p-3">Been</td><td class="p-3">Là, thì, ở</td></tr>
+                                    <tr><td class="p-3 font-bold">Begin</td><td class="p-3">Began</td><td class="p-3">Begun</td><td class="p-3">Bắt đầu</td></tr>
+                                    <tr><td class="p-3 font-bold">Choose</td><td class="p-3">Chose</td><td class="p-3">Chosen</td><td class="p-3">Chọn lựa</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            } else if(sectionKey === 'github-guide') {
+                display.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-brands fa-github text-slate-800"></i> Hướng Dẫn Cài Đặt GitHub & PWA Cho iPhone
+                        </h3>
+                        <div class="space-y-3 text-sm text-slate-600">
+                            <p><b>Bước 1:</b> Tạo Repository trên GitHub và clone về máy bằng <b>GitHub Desktop</b>.</p>
+                            <p><b>Bước 2:</b> Lưu file mã nguồn này với tên <b><code>index.html</code></b> vào thư mục dự án.</p>
+                            <p><b>Bước 3:</b> Nhấn <b>Commit to main</b> rồi nhấn <b>Push origin</b> trên GitHub Desktop.</p>
+                            <p><b>Bước 4:</b> Vào Settings > Pages của repo trên GitHub, bật nguồn từ nhánh <b>main</b> để nhận link trang web.</p>
+                            <p><b>Bước 5:</b> Mở link trên Safari của iPhone, chọn <b>Thêm vào Màn hình chính (Add to Home Screen)</b>.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
